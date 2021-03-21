@@ -76,6 +76,24 @@ describe('Ember Framework', function() {
     td.verify(serveDouble());
   });
 
+  it('serve uses optional arguments', function() {
+    let framework = initFramework();
+
+    const options = {
+      environment: 'local',
+      host: 'http://some.other.host',
+      port:4201,
+      platform: 'ios',
+      ssl: true,
+      sslCert: 'cert-path',
+      sslKey: 'key'
+    }
+
+    const expectedCommand = 'ember serve --environment=local --host=http://some.other.host --port=4201 --ssl=true --ssl-cert=cert-path --ssl-key=key'
+    framework.serve(options);
+    expect(framework.serveCommand).to.equal(expectedCommand);
+  });
+
   it('validateBuild calls _buildValidators then runs validators', function() {
     let runValidatorDouble = td.replace('../../../../lib/utils/run-validators');
     let framework = initFramework();
